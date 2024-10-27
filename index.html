@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        #cookie {
+            width: 200px;
+            height: 200px;
+            background-color: #8B4513; /* Marrom */
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 20px auto;
+        }
+        #upgrades {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cookie Clicker</h1>
+    <div id="cookie"></div>
+    <h2 id="cookies">Cookies: 0</h2>
+    <h2 id="level">Nível: 1</h2>
+    <div id="upgrades"></div>
+
+    <script>
+        let cookies = 0;
+        let upgrades = 0;
+        let level = 1;
+        let upgradePrice = 10;
+
+        const cookieElement = document.getElementById("cookie");
+        const cookiesElement = document.getElementById("cookies");
+        const levelElement = document.getElementById("level");
+        const upgradesElement = document.getElementById("upgrades");
+
+        cookieElement.addEventListener("click", () => {
+            cookies++;
+            updateCookiesDisplay();
+        });
+
+        function updateCookiesDisplay() {
+            cookiesElement.textContent = `Cookies: ${cookies}`;
+            if (upgrades > 0 && upgrades % 10 === 0) {
+                level++;
+                levelElement.textContent = `Nível: ${level}`;
+            }
+        }
+
+        function addUpgrade() {
+            if (cookies >= upgradePrice) {
+                cookies -= upgradePrice;
+                upgrades++;
+                updateCookiesDisplay();
+                updateUpgradePrice();
+                createUpgradeButton();
+            }
+        }
+
+        function createUpgradeButton() {
+            const button = document.createElement("button");
+            button.textContent = `Upgrade (${upgradePrice} cookies)`;
+            button.onclick = addUpgrade;
+            upgradesElement.appendChild(button);
+        }
+
+        function updateUpgradePrice() {
+            upgradePrice = Math.floor(upgradePrice * 1.5);
+        }
+
+        createUpgradeButton(); // Inicializa o primeiro upgrade
+    </script>
+
+</body>
+</html>
